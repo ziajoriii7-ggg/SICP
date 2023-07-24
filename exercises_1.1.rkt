@@ -46,10 +46,12 @@
 ;12
 
 
+
 ; Exercise 1.2: Translate a expression [given in the book] into prefix form
 (/ (+ 5 4 (- 2 (- 3 (+ 6 (/ 4 5)))))
    (* 3 (- 6 2) (- 2 7)))
 ;-37/150
+
 
 
 ; Exercise 1.3: Define a procedure that takes three numbers
@@ -71,6 +73,8 @@
   ))
 ; Testing out the procedure above
 (display (sum_of_square_of_two_largest_numbers 1 2 3)); 2^2 + 3^2
+;13
+
 
 
 ; Exercise 1.4: Observe that our model of evaluation allows for
@@ -90,3 +94,33 @@
 ; this means that this procedure sums a and the absolute value of b.
 
 
+
+; Exercise 1.5: Ben Bitdiddle has invented a test to determine whether the
+; interpreter he is faced with is using applicative-order evaluation or
+; normal-order evaluation. He defines the following two procedures
+
+(define (p) (p))
+(define (test x y)
+  (if (= x 0) 0 y))
+
+  (test 0 (p))
+
+; What behavior will Ben observe with an interpreter that uses applicative-order
+; evaluation? What behavior will he observe with an interpreter that uses
+; normal-order evaluation? Explain your answer. 
+
+; Description of behavior;
+; The loop gets run as an infinite loop recursively, it doesn't get a
+; numerical value at the end since it evaluates itself as ´p´, without
+; any exit condition.
+; Since it first calls the arguments aka: call-by-value / llamada por valor.
+; it's using an applicative order [evaluation]:
+; 1. It evaluates 0 on ´test´, it's a simple eval so it doesn't go further.
+; 2. It calls the value of ´(p)´ p calls itself on define, it goes on an infinite loop
+
+
+
+; To convert this applicative order procedure to a normal order we would have to
+; change 
+
+  
