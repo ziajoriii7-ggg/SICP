@@ -1,4 +1,4 @@
-; #Exercises 1.1: Below is a sequence of expressions. What is
+; # 1.1 SOLUTION: Below is a sequence of expressions. What is
 ; the result printed by the interpreter in response to each expression?
 
 #lang sicp
@@ -47,14 +47,14 @@
 
 
 
-; Exercise 1.2: Translate a expression [given in the book] into prefix form
+; 1.2 SOLUTION: Translate a expression [given in the book] into prefix form
 (/ (+ 5 4 (- 2 (- 3 (+ 6 (/ 4 5)))))
    (* 3 (- 6 2) (- 2 7)))
 ;-37/150
 
 
 
-; Exercise 1.3: Define a procedure that takes three numbers
+; 1.3 SOLUTION: Define a procedure that takes three numbers
 ; as arguments and return the sum of the squares of the two
 ; larger numbers.
 
@@ -77,7 +77,7 @@
 
 
 
-; Exercise 1.4: Observe that our model of evaluation allows for
+; 1.4 SOLUTION: Observe that our model of evaluation allows for
 ; combinations whose operators are compound expressions. Use this
 ; observation to describe the behavior of the following procedure
 
@@ -95,7 +95,7 @@
 
 
 
-; Exercise 1.5: Ben Bitdiddle has invented a test to determine whether the
+; 1.5 SOLUTION: Ben Bitdiddle has invented a test to determine whether the
 ; interpreter he is faced with is using applicative-order evaluation or
 ; normal-order evaluation. He defines the following two procedures
 
@@ -105,22 +105,46 @@
 
   (test 0 (p))
 
-; What behavior will Ben observe with an interpreter that uses applicative-order
-; evaluation? What behavior will he observe with an interpreter that uses
+; What behavior will Ben [1] observe with an interpreter that uses applicative-order
+; evaluation? What behavior will he [2] observe with an interpreter that uses
 ; normal-order evaluation? Explain your answer. 
 
-; Description of behavior;
-; The loop gets run as an infinite loop recursively, it doesn't get a
+; Description of behavior
+
+; [1] APPLICATIVE ORDER:
+; The loop gets run as an infinite loop recursively(*1), it doesn't get a
 ; numerical value at the end since it evaluates itself as ´p´, without
 ; any exit condition.
 ; Since it first calls the arguments aka: call-by-value / llamada por valor.
 ; it's using an applicative order [evaluation]:
 ; 1. It evaluates 0 on ´test´, it's a simple eval so it doesn't go further.
-; 2. It calls the value of ´(p)´ p calls itself on define, it goes on an infinite loop
+; 2. It calls the value of ´(p)´ p calls itself on define, it goes on an infinite loop*1.
 
+; Additional Notes (// theory):
+; + (*1): When the program will not terminate (this case because there's not exit,
+;       p on itself), the program will encounter a runtime error. This is called a
+;       "Stack Overflow / Desbordamiento de pila" porque supera su tamaño asignado
+;       debido a las llamada excesivas de (a) funciones (b) sus variables locales.
+;       "SO" usualmente ocurre cuando:
+;           1. hay una recursión infinita, defining itself 
+;           2. o cuando hay llamadas con funciones sin condiciones de escape / terminación adecuadas.
 
+; [2] NORMAL ORDER:
+; An interpreter with Normal Order behavior would not call the evaluation until the
+; the values are needed(*2). So when _line 5_ ´test´ is called it will check if x is 0
+; so it will just give 0 as in _line 3_
 
-; To convert this applicative order procedure to a normal order we would have to
-; change 
+; CODE GIVEN (// for reading accesibility purposes only XD):
+; 1 |  (define (p) (p))
+; 2 |  (define (test x y)
+; 3 |    (if (= x 0) 0 y))
+; 4 |
+; 5 |  (test 0 (p))
 
+  (test 0 (p))
+; Additional Notes (// theory):
+; + (*2): This behavior is known as "Lazy Evaluation".
+
+; 1.6 SOL:
+; 
   
