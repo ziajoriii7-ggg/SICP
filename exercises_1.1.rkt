@@ -93,7 +93,7 @@
 
 ; this means that this procedure sums a and the absolute value of b.
 
-
+;
 
 ; 1.5 SOLUTION: Ben Bitdiddle has invented a test to determine whether the
 ; interpreter he is faced with is using applicative-order evaluation or
@@ -149,17 +149,17 @@
 
 
 ; 1.6 SOL:
-|# Exercise 1.6: Alyssa P. Hacker doesn’t see why if needs to
-be provided as a special form. “Why can’t I just define it as
-an ordinary procedure in terms of cond?” she asks. Alyssa’s
-friend Eva Lu Ator claims this can indeed be done, and she
-defines a new version of if|# 
+; # Exercise 1.6: Alyssa P. Hacker doesn’t see why if needs to
+; be provided as a special form. “Why can’t I just define it as
+; an ordinary procedure in terms of cond?” she asks. Alyssa’s
+; friend Eva Lu Ator claims this can indeed be done, and she
+; defines a new version of if
 
 (define (new-if predicate then-clause else-clause) ; this code define the procedure new-if and it tales three arguments. 
   (cond (predicate then-clause)                    ; this procedure evaluates predicate if it's true it returns the value of ´then-clause´
         (else else-clause)))(newline)              ; if the predicate is not true it returns else-clause
 
-|# Eva demonstrates the program for Alyssa|# 
+; Eva demonstrates the program for Alyssa 
 
 (new-if (= 2 3) 0 5)    ; The predicate ´(= 2 3)´ is false since 2 != 3. so ´else-clause´ is evaluated. In this case it returns 5.
 ; 5
@@ -167,15 +167,15 @@ defines a new version of if|#
 (new-if (= 1 1) 0 5)    ; The predicate ´(= 1 1)´ is true since 1 = 1. so ´then-clause´ is evaluated. In this case it returns 0.
 ; 0
 
-|# Delighted, Alyssa uses new-if to rewrite the square-root program:|# 
+; Delighted, Alyssa uses new-if to rewrite the square-root program:|# 
 
-|# (define (sqrt-iter guess x)
-  (new-if (good-enough? guess x)
-          guess
-          (sqrt-iter (improve guess x) x)))|# 
+; (define (sqrt-iter guess x)
+;  (new-if (good-enough? guess x)
+;          guess
+;          (sqrt-iter (improve guess x) x)))|# 
 
 
-|# What happens when Alyssa attempts to use this to compute square roots? Explain.|# 
+; What happens when Alyssa attempts to use this to compute square roots? Explain.|# 
 
 ; So in this exercise Alyssa redefine the ´if´, which is a special form.
 ; A procedure on Scheme is a function that gets evaluated first
@@ -192,20 +192,25 @@ defines a new version of if|#
 ; ´if´ (NORMAL ORDER)
 
 
-|# Exercise 1.7: The good-enough? test used in computing square roots will not
-be very effective for finding the square roots of very small numbers. Also,
-in real computers, arithmetic operations are almost always performed with
-limited precision. This makes our test inadequate for very largenumbers.
-Explain these statements, with examples showing how the test fails for
-small and large numbers. An alternative strategy for implementing good-enough?
-is to watch how guess changes from one iteration to the next and to stop when
-the change is a very small fraction of the guess. Design a square-root
-procedure that uses this kind of end test. Does this work better for small
-and large numbers? |#
+; Exercise 1.7: The good-enough? test used in computing square roots will not
+; be very effective for finding the square roots of very small numbers. Also,
+; in real computers, arithmetic operations are almost always performed with
+; limited precision. This makes our test inadequate for very large numbers.
+; Explain these statements, with examples showing how the test fails for
+; small and large numbers. An alternative strategy for implementing good-enough?
+; is to watch how guess changes from one iteration to the next and to stop when
+; the change is a very small fraction of the guess. Design a square-root
+; procedure that uses this kind of end test. Does this work better for small
+; and large numbers?
 
 (sqrt 12345678901234)
+; 3513641.8288200633
+
 (sqrt 9123456799955555555555555)
-(sqrt 0.5555551235555)
+; 3020506050309.3774
+
+(sqrt 0.0000000000552345235555)
+
 
 ; GENERAL OBSERVATIONS:
 ; + sqrt is very ineffective for tiny value because of the added decimals because of memory
@@ -222,12 +227,12 @@ and large numbers? |#
 
 (define (cube-root x)
   (define (good-enough? guess x)
-    (< (abs (- (cube guess) x)) 0.00001))
+    (< (abs (- (cube guess) x)) 0.00001))         ; compare values
 
   (define (improve guess x)
     (/ (+ (/ x (* guess guess)) (* 2 guess)) 3))
 
-  (define (cube x) (* x x x))
+  (define (cube x) (* x x x))                      ;define cube
 
   (define (sqrt-iter guess x)
     (if (good-enough? guess x)
